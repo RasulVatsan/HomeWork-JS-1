@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            margin-top: 20px;
+        }
+
+        span[id="res"] {
+            color: blue;
+            font-size: 2rem;
+        }
+
+        body {
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+        }
+
+        h1 {
+            color: blue ;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Расчет количества прошедших месяцев</h1>
+        <label for="dateInput">Выберите дату: </label>
+        <input type="date" id="dateInput">
+        <button onclick="calculateMonths()">Рассчитать</button>
+        <p id="monthsOutput"></p>
+    </div>
+
+    <h1>Калькулятор</h1>
+    <div>
+        <label for="oper1">Введите первое число</label>
+        <input id="oper1" type="number" value="0" onchange="calc()">
+    </div>
+    <div>
+        <label for="oper2">Введите второе число</label>
+        <input id="oper2" type="number" value="0" onchange="calc()">
+    </div>
+    <div>
+        <select id="operation" onchange="calc()">
+            <option>Сложить</option>
+            <option>Вычесть</option>
+            <option>Умножить</option>
+            <option>Разделить</option>
+            <option>Степень</option>
+            <option>Квадратный корень</option>
+        </select>
+    </div>
+    <p>Результат:<span id="res"></span></p>
+
+    <script>
+        function calculateMonths() {
+            const inputDate = new Date(document.getElementById('dateInput').value);
+            const currentDate = new Date();
+
+            let months;
+            months = (currentDate.getFullYear() - inputDate.getFullYear()) * 12;
+            months -= inputDate.getMonth();
+            months += currentDate.getMonth();
+
+            document.getElementById('monthsOutput').innerText = `Количество месяцев: ${months}`;
+        }
+
+        function calc() {
+            let x = parseInt(document.getElementById("oper1").value);
+            let y = parseInt(document.getElementById("oper2").value);
+            let result = 0;
+            let operation = document.getElementById("operation").value;
+            switch (operation) {
+                case "Сложить":
+                    result = x + y;
+                    break;
+                case "Вычесть":
+                    result = x - y;
+                    break;
+                case "Умножить":
+                    result = x * y;
+                    break;
+                case "Разделить":
+                    result = x / y;
+                    break;
+                case "Степень":
+                    result = Math.pow(x, y);
+                    break;
+                case "Квадратный корень":
+                    result = Math.sqrt(x);
+                    break;
+                default:
+                    result = "Error!";
+                    break;
+            }
+
+            if (result % 1 != 0) {
+                result = result.toFixed(2);
+            }
+            document.getElementById('res').innerText = result;
+        }
+    </script>
+</body>
+
+</html>
